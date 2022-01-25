@@ -1,6 +1,6 @@
 # SPEAK.io
 
-A decentralized social network based on Web 3.0.  
+[Work In Progress] A decentralized social network based on Web 3.0.  
 Built with Svelte, gun.js and ❤️.
 
 ## Developing
