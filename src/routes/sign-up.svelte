@@ -10,35 +10,36 @@
   import { goto, prefetchRoutes } from '$app/navigation';
   import { onMount } from 'svelte';
   
-  import AuthLogo from '../components/AuthLogo.svelte';
-  import Background from '../components/Background.svelte';
-  import SignUpForm from '../components/SignUpForm.svelte';
+  import AuthHeader from 'components/auth/AuthHeader.svelte';
+  import Background from 'components/ui/Background.svelte';
+  import SignUpForm from 'components/auth/SignUpForm.svelte';
 
-  import BackgroundImage from '../assets/signup-bg.jpeg';
+  import BackgroundImage from 'assets/signup-bg.jpeg';
 
   onMount(() => {
     prefetchRoutes(['sign-in']);
   });
-
-  const onSignInPressed = () => {
-    goto('sign-in')
-  };
 </script>
 
 <style lang="stylus" scoped>
+  // Using 1280px as a workaround since stylus ignores `@screen sm` directive
+  $desktop = '(min-width 1280px)'
   .form-wrap 
-    width: 60%
-    height: 100%
+    width 100%
+    height 100%
+
+    @media $desktop
+      width 60%
 </style>
 
-<div class="bg-gray-100 page flex">
-  <AuthLogo />
+<div class="bg-white sm:bg-gray-100 page flex flex-col xl:flex-row">
+  <AuthHeader />
 
   <div class="justify-end flex flex-1">
     <div class="flex justify-center items-center form-wrap">
-      <SignUpForm onSignInPressed={onSignInPressed} />
+      <SignUpForm />
     </div>
 
-    <Background image={BackgroundImage} />
+    <Background image={BackgroundImage} classes="invisible sm:visible" />
   </div>
 </div>

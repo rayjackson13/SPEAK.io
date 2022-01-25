@@ -7,6 +7,10 @@
   --auth-form-width: 520px;
 }
 
+body {
+  min-width: 320px;
+}
+
 .page {
   min-height: 100vh;
   position: relative;

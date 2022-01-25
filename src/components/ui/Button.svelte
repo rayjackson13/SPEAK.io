@@ -5,7 +5,7 @@
 
 <button
   type={type}
-  class="bg-violet-700 hover:bg-violet-800 active:bg-violet-900 w-full py-3 rounded-xl text-white"
+  class="bg-violet-700 hover:bg-violet-800 active:bg-violet-900 w-full py-3 rounded-xl text-white focus:outline-violet-500 focus:outline-offset-2"
 >
   {text}
 </button>
