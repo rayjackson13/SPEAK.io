@@ -1,37 +1,67 @@
 <script lang="ts">
-  import { beforeUpdate } from 'svelte';
-  import clsx from 'clsx';
+	import clsx from 'clsx';
 
-  export let type: 'text' | 'password';
-  export let label: string;
-  export let classes: string | undefined;
-  export let value: string;
-  export let name: string;
-  export let handleChange: ((event: any) => any) | undefined;
-  export let errors: any | undefined;
-  
-  const originalClass = 'mt-1 shadow appearance-none border-2 rounded-2xl w-full py-3 px-4 text-gray-800 leading-tight border-gray-400 focus:outline-violet-500 outline-offset-2 sm:text-lg';
-  const getClass = () => {
-    return clsx(originalClass, !!$errors[name] && 'border-pink-700');
-  }
+	export let type: 'text' | 'password';
+	export let label: string;
+	export let classes: string | undefined;
+	export let value: string;
+	export let name: string;
+	export let handleChange: ((event: any) => any) | undefined;
+	export let error: string | undefined;
 
-  let inputClass = getClass();
-  beforeUpdate(() => { inputClass = getClass() })
+	const getClass = (error: string | undefined) => {
+		return clsx(!!error && 'input-error');
+	};
 </script>
 
-<div class="{classes}">
-  <label class="block text-gray-700 text-sm font-medium">
-    {label}:
-    <input
-      name={name}
-      class={inputClass}
-      placeholder={label}
-      type={type}
-      value={value}
-      on:change={handleChange}
-    >
-    {#if $errors[name]}
-      <small class="text-pink-700">{$errors[name]}</small>
-    {/if}
-  </label>
+<div class={classes}>
+	<label>
+		{label}:
+		<input
+			{name}
+			class={getClass(error)}
+			placeholder={label}
+			{type}
+			{value}
+			on:change={handleChange}
+		/>
+		{#if error}
+			<small>{error}</small>
+		{/if}
+	</label>
 </div>
+
+<style lang="sass" scoped>
+  @import 'functions'
+  @import 'vars'
+
+  label
+    display: block
+    @include font(sm)
+    color: $gray-700
+    font-weight: 500
+
+  input
+    margin-top: 4px
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)
+    appearance: none
+    border: 2px solid $gray-400
+    border-radius: 16px
+    width: 100%
+    padding: 12px 16px
+    color: $gray-800
+    outline-offset: 2px
+
+    @include screen(sm)
+      @include font(lg)
+
+    &:focus
+      outline: 1px auto $primary-500
+
+  .input-error
+    border-color: $secondary-700
+
+  small
+    color: $secondary-700
+
+</style>

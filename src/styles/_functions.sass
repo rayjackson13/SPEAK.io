@@ -1,0 +1,40 @@
+$screen-sm: 640px
+$screen-md: 768px
+$screen-lg: 1024px
+$screen-xl: 1280px
+
+$font-size-sm: 14px
+$font-size-md: 16px
+$font-size-lg: 20px
+$font-size-xl: 24px
+$font-size-xxl: 30px
+
+$line-height-sm: 20px
+$line-height-md: 24px
+$line-height-lg: 28px
+$line-height-xl: 32px
+$line-height-xxl: 36px
+
+@function parse-screen-condition($c)
+  $condMap: ('sm': $screen-sm, 'md': $screen-md, 'lg': $screen-lg, 'xl': $screen-xl)
+  @return map-get($condMap, $c)
+
+// usage: `include media(sm)`
+@mixin screen($breakpoint)
+  $query: '(min-width: #{parse-screen-condition($breakpoint)})'
+  @media #{$query}
+    @content
+
+@function parse-font-size($size)
+  $sizeMap: ('sm': $font-size-sm,'md': $font-size-md,'lg': $font-size-lg,'xl': $font-size-xl,'xxl': $font-size-xxl)
+  @return map-get($sizeMap, $size)
+
+@function parse-line-height($size)
+  $heightMap: ('sm': $line-height-sm,'md': $line-height-md,'lg': $line-height-lg,'xl': $line-height-xl,'xxl': $line-height-xxl)
+  @return map-get($heightMap, $size)
+
+// usage: `include font(sm)`
+@mixin font($size)
+  font-size: #{parse-font-size($size)}
+  line-height: #{parse-line-height($size)}
+

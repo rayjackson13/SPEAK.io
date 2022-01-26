@@ -1,5 +1,5 @@
-<script>
-  import '../app.css';
-</script>
-
 <slot />
+
+<style lang="sass" global>
+  @import 'global'
+</style>

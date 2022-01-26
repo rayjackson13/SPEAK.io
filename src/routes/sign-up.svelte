@@ -1,45 +1,64 @@
-<svelte:head>
-  <title>Sign Up | SPEAK.io</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
-</svelte:head>
-
 <script>
-  import { goto, prefetchRoutes } from '$app/navigation';
-  import { onMount } from 'svelte';
-  
-  import AuthHeader from 'components/auth/AuthHeader.svelte';
-  import Background from 'components/ui/Background.svelte';
-  import SignUpForm from 'components/auth/SignUpForm.svelte';
+	import { onMount } from 'svelte';
+	import { prefetchRoutes } from '$app/navigation';
 
-  import BackgroundImage from 'assets/signup-bg.jpeg';
+	import AuthHeader from 'components/auth/AuthHeader.svelte';
+	import Background from 'components/ui/Background.svelte';
+	import SignUpForm from 'components/auth/SignUpForm.svelte';
 
-  onMount(() => {
-    prefetchRoutes(['sign-in']);
-  });
+	import BackgroundImage from 'assets/signup-bg.jpeg';
+
+	onMount(() => {
+		prefetchRoutes(['sign-in']);
+	});
 </script>
 
-<style lang="stylus" scoped>
-  // Using 1280px as a workaround since stylus ignores `@screen sm` directive
-  $desktop = '(min-width 1280px)'
-  .form-wrap 
-    width 100%
-    height 100%
+<svelte:head>
+	<title>Sign Up | SPEAK.io</title>
+</svelte:head>
 
-    @media $desktop
-      width 60%
-</style>
+<div class="page">
+	<AuthHeader />
 
-<div class="bg-white sm:bg-gray-100 page flex flex-col xl:flex-row">
-  <AuthHeader />
+	<div class="page-inner">
+		<div class="form-wrap">
+			<SignUpForm />
+		</div>
 
-  <div class="justify-end flex flex-1">
-    <div class="flex justify-center items-center form-wrap">
-      <SignUpForm />
-    </div>
-
-    <Background image={BackgroundImage} classes="invisible sm:visible" />
-  </div>
+		<Background image={BackgroundImage} />
+	</div>
 </div>
+
+<style lang="sass" scoped>
+  @import 'functions'
+  @import 'vars'
+
+  .page
+    background-color: $white
+    display: flex
+    flex-direction: column
+    min-height: 100vh
+    position: relative
+    z-index: 0
+
+    @include screen(sm)
+      background-color: $gray-100
+
+    @include screen(xl)
+      flex-direction: row
+
+    &-inner
+      display: flex
+      justify-content: end
+      flex: 1
+
+  .form-wrap
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 100%
+    height: 100%
+
+    @include screen(xl)
+      width: 60%
+</style>

@@ -1,83 +1,155 @@
 <script lang="ts">
-  import { createForm } from 'svelte-forms-lib';
-  import * as yup from 'yup';
+	import { createForm } from 'svelte-forms-lib';
+	import * as yup from 'yup';
 
-  import Icon from 'svelte-awesome';
-  import { externalLink } from 'svelte-awesome/icons';
+	import Icon from 'svelte-awesome';
+	import { externalLink } from 'svelte-awesome/icons';
 
-  import Button from 'components/ui/Button.svelte';
-  import Dropzone from 'components/ui/Dropzone.svelte';
-  import Input from 'components/ui/Input.svelte';
-import { ValidationErrors } from 'constants/ValidationErrors';
+	import Button from 'components/ui/Button.svelte';
+	import Dropzone from 'components/ui/Dropzone.svelte';
+	import Input from 'components/ui/Input.svelte';
+	import { ValidationErrors } from 'constants/ValidationErrors';
 
-  const { form, errors, handleChange, handleSubmit } = createForm({
-    initialValues: {
-      username: '',
-      password: '',
-    },
-    validationSchema: yup.object().shape({
-      username: yup.string()
-        .required(ValidationErrors.UsernameEmpty)
-        .min(6, ValidationErrors.UsernameShort),
-      password: yup.string()
-        .required(ValidationErrors.PasswordEmpty)
-        .min(6, ValidationErrors.PasswordShort),
-    }),
-    onSubmit: values => {
-      console.log('Submitting...', JSON.stringify(values))
-    }
-  })
+	const { form, errors, handleChange, handleSubmit } = createForm({
+		initialValues: {
+			username: '',
+			password: ''
+		},
+		validationSchema: yup.object().shape({
+			username: yup
+				.string()
+				.min(6, ValidationErrors.UsernameShort)
+				.required(ValidationErrors.UsernameEmpty),
+			password: yup
+				.string()
+				.min(6, ValidationErrors.PasswordShort)
+				.required(ValidationErrors.PasswordEmpty)
+		}),
+		onSubmit: (values) => {
+			console.log('Submitting...', JSON.stringify(values));
+		}
+	});
 </script>
 
-<style lang="stylus" scoped>
-  .form 
-    max-width var(--auth-form-width)
-</style>
+<form on:submit|preventDefault={handleSubmit}>
+	<h3 class="title">
+		Welcome to <span class="title-accent">SPEAK</span>.io
+	</h3>
+	<p class="info">
+		We are the leading platform in the world of decentralized social networks.
+		<a href="https://www.youtube.com/watch?v=J5x3OMXjgMc" target="_blank" class="info-link">
+			What does that mean?
+			<Icon data={externalLink} scale={0.8} />
+		</a>
+	</p>
 
-<form 
-  class="h-full xl:h-auto sm:mt-12 form bg-white sm:drop-shadow-2xl sm:rounded-2xl p-4 sm:p-8 pb-10 mb-4"
-  on:submit|preventDefault={handleSubmit}
->
-  <h3 class="mb-2 sm:mb-3 text-center text-xl sm:text-3xl text-gray-800 font-display">Welcome to <span class="text-violet-800">SPEAK</span>.io</h3>
-  <p class="mb-4 sm:mb-8 text-center text-sm sm:text-base text-gray-600 font-display">
-    We are the leading platform in the world of decentralized social networks.
-    <a href="https://www.youtube.com/watch?v=J5x3OMXjgMc" target="_blank" class="underline underline-offset-2 text-pink-700">
-      What does that mean?
-      <Icon data={externalLink} scale={.8} />
-    </a>
-  </p>
+	<Input
+		type="text"
+		name="username"
+		label="Username"
+		classes="input"
+		{handleChange}
+		bind:value={$form.username}
+		error={$errors.username}
+	/>
 
-  <Input 
-    type="text" 
-    name="username" 
-    label="Username" 
-    classes="mb-4" 
-    handleChange={handleChange}
-    bind:value={$form.username}
-    errors={errors}
-  />
+	<Input
+		type="password"
+		name="password"
+		label="Password"
+		classes="input"
+		{handleChange}
+		bind:value={$form.password}
+		error={$errors.password}
+	/>
 
-  <Input
-    type="password"
-    name="password"
-    label="Password"
-    classes="mb-4"
-    handleChange={handleChange}
-    bind:value={$form.password}
-    errors={errors}
-  />
+	<Dropzone classes="input-last" label="Avatar (optional)" />
 
-  <Dropzone classes="mb-8" label="Avatar (optional)" />
+	<Button type="submit" text="Sign Up" />
 
-  <Button type="submit" text="Sign Up" />
-
-  <div class="block mt-2 text-gray-700 text-right text-sm sm:text-base">
-    Already have an account?
-    <a 
-      href="/sign-in"
-      class="rounded-xl underline underline-offset-2 text-pink-700 hover:text-pink-800 active:text-pink-900 outline-violet-500 outline-offset-2"
-    >
-      Sign In.
-  </a>
-  </div>
+	<span class="no-account">
+		Already have an account?
+		<a href="/sign-in" class="no-account__link"> Sign In. </a>
+	</span>
 </form>
+
+<style lang="sass" scoped>
+  @import 'functions'
+  @import 'vars'
+
+  form
+    max-width: $auth-form-width
+    background-color: $white
+    height: 100%
+    filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))
+    padding: 16px 16px 40px
+    margin-bottom: 16px
+
+    @include screen(sm)
+      margin-top: 48px
+      border-radius: 16px
+      padding: 32px 32px 40px
+
+    @include screen(xl)
+      height: auto
+
+  .title
+    @include font(lg)
+    margin-bottom: 8px
+    text-align: center
+    font-family: $nunito
+    color: $gray-800
+
+    @include screen(sm)
+      @include font(xxl)
+      margin-bottom: 12px
+
+    &-accent
+      color: $primary-800
+
+  .info
+    @include font(sm)
+    font-family: $nunito
+    text-align: center
+    color: $gray-600
+    margin-bottom: 16px
+
+    @include screen(sm)
+      @include font(md)
+      margin-bottom: 32px
+
+    &-link
+      text-decoration: underline
+      text-underline-offset: 2px
+      color: $secondary-700
+
+  * :global(.input)
+    margin-bottom: 16px
+
+  * :global(.input-last)
+    margin-bottom: 32px
+
+  .no-account
+    display: block
+    @include font(sm)
+    margin-top: 8px
+    color: $gray-700
+    text-align: right
+
+    @include screen(sm)
+      @include font(md)
+
+    &__link
+      border-radius: 12px
+      text-decoration: underline
+      text-underline-offset: 2px
+      color: $secondary-700
+      outline-offset: 2px
+      outline-color: $primary-500
+
+      &:hover
+        color: $secondary-800
+
+      &:active
+        color: $secondary-900
+</style>

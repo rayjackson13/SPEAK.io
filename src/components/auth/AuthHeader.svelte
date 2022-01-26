@@ -1,15 +1,62 @@
 <script lang="ts">
-  import LogoIcon from 'assets/logo2.svg';
+	import LogoIcon from 'assets/logo2.svg';
 </script>
 
-<div class="w-full xl:w-auto h-14 sm:h-16 xl:h-auto px-4 py-1 flex items-center bg-gray-800 xl:bg-transparent xl:left-16 xl:top-8 xl:absolute">
-  <img 
-    class="absolute xl:static left-4 sm:left-16 xl:left-auto w-12 sm:w-16 xl:w-24 drop-shadow-2xl" 
-    src="{LogoIcon}"
-    alt="SPEAK.io Logo"
-  >
-
-  <span class="block pl-4 text-white font-display text-xl sm:text-2xl w-full text-center xl:invisible">
-    SPEAK.io
-  </span>
+<div class="wrap">
+	<img src={LogoIcon} alt="SPEAK.io Logo" />
+	<span>SPEAK.io</span>
 </div>
+
+<style lang="sass" scoped>
+  @import 'functions'
+  @import 'vars'
+
+  .wrap
+    width: 100%
+    height: 56px
+    padding: 4px 16px
+    display: flex
+    align-items: center
+    background-color: $gray-800
+
+    @include screen(sm)
+      height: 64px
+
+    @include screen(xl)
+      position: absolute
+      left: 64px
+      top: 32px
+      width: auto
+      height: auto
+      background-color: transparent
+
+  img
+    position: absolute
+    left: 16px
+    width: 48px
+    filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))
+
+    @include screen(sm)
+      left: 64px
+      width: 64px
+
+    @include screen(xl)
+      position: static
+      left: auto
+      width: 96px
+
+  span
+    display: block
+    padding-left: 16px
+    color: $white
+    font-family: $nunito
+    width: 100%
+    text-align: center
+    @include font(xl)
+
+    @include screen(sm)
+      @include font(xxl)
+    
+    @include screen(xl)
+      visibility: hidden
+</style>
