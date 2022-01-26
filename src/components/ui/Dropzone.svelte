@@ -1,7 +1,9 @@
+<!-- @deprecated: Out of use. -->
 <script lang="ts">
 	import UploadIcon from 'svelte-icons/io/IoIosCloudUpload.svelte';
 
 	export let label: string;
+	export let name: string;
 	export let classes: string | undefined;
 </script>
 
@@ -9,7 +11,7 @@
 	<span class="label">{label}:</span>
 
 	<span class="wrap">
-		<input type="file" />
+		<input {name} type="file" />
 		<i class="icon">
 			<UploadIcon />
 		</i>

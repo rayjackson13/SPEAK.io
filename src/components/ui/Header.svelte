@@ -1,11 +1,9 @@
 <script lang="ts">
 	import clsx from 'clsx';
 
-	import type { UserType } from 'api/user';
+	import { username } from 'api/user';
 	import MenuIcon from 'svelte-icons/go/GoKebabVertical.svelte';
 	import LogoIcon from 'assets/logo2.svg';
-
-	export let user: UserType | undefined = undefined;
 
 	let isMenuOpened = false;
 	const onMenuClick = () => (isMenuOpened = !isMenuOpened);
@@ -24,14 +22,14 @@
 		</div>
 		<div class="menu">
 			<button type="button" class="menu-button" on:click={onMenuClick} on:focusout={closeMenu}>
-				{#if !user}
+				{#if !$username}
 					<MenuIcon />
 				{:else}
-					<button>Hi</button>
+					<img src="https://avatars.dicebear.com/api/initials/${$username}.svg" alt={$username} />
 				{/if}
 
 				<div class={clsx('menu-inner', !isMenuOpened && 'menu-inner_hidden')}>
-					{#if !user}
+					{#if !username}
 						<a href="/sign-up">Sign Up</a>
 						<a href="/sign-in">Log In</a>
 					{:else}
@@ -122,7 +120,12 @@
       height: 48px
       background-image: none
       background-color: transparent
+      padding: 0
+      cursor: pointer
 
       & :global(svg)
         height: 24px
+
+      & img
+        border-radius: 50%
 </style>

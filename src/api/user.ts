@@ -27,8 +27,3 @@ export const dbUser = db.user().recall({ sessionStorage: true });
 export const username = writable('');
 
 dbUser.get('alias').on(v => username.set(v));
-
-// db.on('auth', async () => {
-//   const alias = await user.get('alias');
-//   username.set(alias);
-// })

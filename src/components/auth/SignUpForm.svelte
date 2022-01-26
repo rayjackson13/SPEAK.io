@@ -2,16 +2,15 @@
   import { writable } from 'svelte/store';
 	import { createForm } from 'svelte-forms-lib';
 	import * as yup from 'yup';
+  import { goto } from '$app/navigation';
 
 	import Icon from 'svelte-awesome';
 	import { externalLink } from 'svelte-awesome/icons';
 
   import { dbUser, APIException } from 'api/user'
 	import Button from 'components/ui/Button.svelte';
-	import Dropzone from 'components/ui/Dropzone.svelte';
 	import Input from 'components/ui/Input.svelte';
 	import { ValidationErrors } from 'constants/ValidationErrors'
-import { goto } from '$app/navigation';
 
   const apiError = writable<string | undefined>();
 
@@ -80,8 +79,6 @@ import { goto } from '$app/navigation';
 		bind:value={$form.password}
 		error={$errors.password}
 	/>
-
-	<Dropzone classes="input" label="Avatar (optional)" />
 
 	<div class="errorHolder">
 		{#if $apiError}
