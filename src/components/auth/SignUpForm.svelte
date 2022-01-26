@@ -1,14 +1,19 @@
 <script lang="ts">
+  import { writable } from 'svelte/store';
 	import { createForm } from 'svelte-forms-lib';
 	import * as yup from 'yup';
 
 	import Icon from 'svelte-awesome';
 	import { externalLink } from 'svelte-awesome/icons';
 
+  import { dbUser, APIException } from 'api/user'
 	import Button from 'components/ui/Button.svelte';
 	import Dropzone from 'components/ui/Dropzone.svelte';
 	import Input from 'components/ui/Input.svelte';
-	import { ValidationErrors } from 'constants/ValidationErrors';
+	import { ValidationErrors } from 'constants/ValidationErrors'
+import { goto } from '$app/navigation';
+
+  const apiError = writable<string | undefined>();
 
 	const { form, errors, handleChange, handleSubmit } = createForm({
 		initialValues: {
@@ -26,7 +31,20 @@
 				.required(ValidationErrors.PasswordEmpty)
 		}),
 		onSubmit: (values) => {
-			console.log('Submitting...', JSON.stringify(values));
+			console.log('Submitting...', values);
+
+			const { username, password } = values;
+
+      dbUser.create(username, password, (e) => {
+        const { err } = e as APIException;
+        if (err) {
+          apiError.set(err);
+          return;
+        }
+
+        dbUser.auth(username, password);
+        goto('/')
+      });
 		}
 	});
 </script>
@@ -63,7 +81,13 @@
 		error={$errors.password}
 	/>
 
-	<Dropzone classes="input-last" label="Avatar (optional)" />
+	<Dropzone classes="input" label="Avatar (optional)" />
+
+	<div class="errorHolder">
+		{#if $apiError}
+			<small>{$apiError}</small>
+		{/if}
+	</div>
 
 	<Button type="submit" text="Sign Up" />
 
@@ -126,8 +150,15 @@
   * :global(.input)
     margin-bottom: 16px
 
-  * :global(.input-last)
-    margin-bottom: 32px
+  .errorHolder
+    padding-bottom: 16px
+    
+    & small
+      display: block
+      text-align: center
+      color: $secondary-700
+      width: 100%
+      padding-top: 8px
 
   .no-account
     display: block

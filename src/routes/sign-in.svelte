@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { prefetchRoutes } from '$app/navigation';
-
+  
 	import AuthHeader from 'components/auth/AuthHeader.svelte';
 	import Background from 'components/ui/Background.svelte';
 	import SignInForm from 'components/auth/SignInForm.svelte';

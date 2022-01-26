@@ -21,6 +21,7 @@ const config = {
 		vite: {
 			resolve: {
 				alias: {
+					api: path.resolve('./src/api'),
 					assets: path.resolve('./src/assets'),
 					components: path.resolve('./src/components'),
 					constants: path.resolve('./src/constants')
