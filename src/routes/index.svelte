@@ -16,7 +16,6 @@
 	});
 
 	const onCreatePost = async (text: string) => {
-		console.log('aaaaa');
 		await createPost({
 			author: $username,
 			text,

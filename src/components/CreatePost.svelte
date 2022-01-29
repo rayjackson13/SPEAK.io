@@ -1,4 +1,6 @@
 <script lang="ts">
+import { goto } from '$app/navigation';
+
 	import { createPost } from 'api/posts';
 	import { username } from 'api/user';
 
@@ -15,7 +17,12 @@
 			text: ''
 		},
 		onSubmit: async ({ text }) => {
-			if (!text.trim() || !$username) return;
+      if (!$username) {
+        goto('/sign-in');
+        return;
+      }
+
+			if (!text.trim()) return;
 
 			onCreatePost(text);
 			handleReset();
