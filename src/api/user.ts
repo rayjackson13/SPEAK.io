@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment */
-import { writable } from 'svelte/store';
-
+import http from 'http';
 import GUN from 'gun';
 import 'gun/sea';
 import 'gun/axe';
 import type { IGunChainReference } from 'gun/types/chain';
+import { writable } from 'svelte/store';
 
 export type APIException = {
   err: string;
@@ -23,7 +23,7 @@ export type Database = IGunChainReference<any, any, "pre_root"> & {
 }
 
 // Initialize the database
-export const db = GUN();
+export const db = GUN(['ws://localhost:3333']);
 
 // Get current user with option to keep auth between browser sessions.
 export const dbUser = db.user().recall({ sessionStorage: true });

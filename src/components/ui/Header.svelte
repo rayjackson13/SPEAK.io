@@ -49,7 +49,7 @@
 				{#if !$username}
 					<MenuIcon />
 				{:else}
-					<img src="https://avatars.dicebear.com/api/initials/${$username}.svg" alt={$username} />
+					<img src="https://avatars.dicebear.com/api/initials/{$username}.svg" alt={$username} />
 				{/if}
 
 				<div

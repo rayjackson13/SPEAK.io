@@ -1,22 +1,28 @@
 <script lang="ts">
+	import { createPost } from 'api/posts';
+	import { username } from 'api/user';
+
 	import { onMount } from 'svelte';
 	import { createForm } from 'svelte-forms-lib';
 
 	import PostIcon from 'svelte-icons/io/IoIosSend.svelte';
 
+  export let onCreatePost: (text: string) => void;
 	let textarea: HTMLTextAreaElement;
 
-	const { form, handleSubmit, handleChange } = createForm({
+	const { form, handleSubmit, handleChange, handleReset } = createForm({
 		initialValues: {
 			text: ''
 		},
-		onSubmit: ({ text }) => {
-			if (!text.trim()) return;
-			console.log('submit', text);
+		onSubmit: async ({ text }) => {
+			if (!text.trim() || !$username) return;
+
+			onCreatePost(text);
+			handleReset();
 		}
 	});
 
-	onMount(() => {
+	onMount(async () => {
 		textarea.addEventListener('keydown', (e: KeyboardEvent) => {
 			if (e.key.toLowerCase() === 'enter' && e.metaKey) handleSubmit(e);
 		});
@@ -117,6 +123,7 @@
     &:active
       color: $secondary-900
       border-color: $secondary-900
+      background-color: $gray-300
 
     @include screen(sm)
       width: auto
