@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": ".vercel_build_output/static/_app",
+    "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",

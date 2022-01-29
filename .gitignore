@@ -11,3 +11,4 @@ yarn-error.*
 .firebase/
 .svelte/
 .vercel_build_output/
+firebase-debug*
