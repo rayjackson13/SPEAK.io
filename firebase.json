@@ -1,12 +1,6 @@
 {
-  "functions": {
-    "predeploy": [
-      "npm --prefix \"$RESOURCE_DIR\" run lint",
-      "npm --prefix \"$RESOURCE_DIR\" run build"
-    ]
-  },
   "hosting": {
-    "public": "public",
+    "public": ".vercel_build_output/static/_app",
     "ignore": [
       "firebase.json",
       "**/.*",
