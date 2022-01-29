@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment */
-import http from 'http';
 import GUN from 'gun';
 import 'gun/sea.js';
 import 'gun/axe.js';
@@ -23,7 +22,7 @@ export type Database = IGunChainReference<any, any, "pre_root"> & {
 }
 
 // Initialize the database
-export const db = GUN(['ws://localhost:3333']);
+export const db = GUN([import.meta.env.VITE_RELAY_HOST]);
 
 // Get current user with option to keep auth between browser sessions.
 export const dbUser = db.user().recall({ sessionStorage: true });
