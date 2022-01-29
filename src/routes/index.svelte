@@ -23,6 +23,13 @@
 		background-color: $gray-50
 
 	main
-		padding: $header-size 116px 0
+		padding: 16px 16px 0
 		@include container
+
+		@include screen(sm)
+			padding-top: 32px
+
+		@include screen(lg)
+			padding-left: 116px
+			padding-right: 116px
 </style>

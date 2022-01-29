@@ -159,7 +159,7 @@
       cursor: default
 
       &_hidden
-        transform: translateY(calc(-100% - 16px))
+        transform: translateY(calc(-25%))
         opacity: 0
         z-index: -1
 
@@ -187,6 +187,7 @@
 
       & img
         border-radius: 50%
+        box-shadow: 1px 2px 8px rgb(0 0 0 / .25)
 
   .space-taker
     height: $header-size

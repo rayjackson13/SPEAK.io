@@ -60,3 +60,6 @@ $container-xl: 1140px
   @include screen(xl)
     max-width: #{parse-container-size(xl)}
 
+@mixin touch
+  @media (hover: none) and (pointer: coarse)
+    @content
