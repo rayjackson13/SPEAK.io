@@ -1,5 +1,5 @@
 <script lang="ts">
-	import LogoIcon from 'assets/logo2.svg';
+	import LogoIcon from 'assets/logo.svg';
 </script>
 
 <div class="wrap">
@@ -34,7 +34,8 @@
     position: absolute
     left: 16px
     width: 48px
-    filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))
+    z-index: 1
+    // filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))
 
     @include screen(sm)
       left: 64px

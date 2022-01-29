@@ -15,6 +15,11 @@ $line-height-lg: 28px
 $line-height-xl: 32px
 $line-height-xxl: 36px
 
+$container-sm: 100%
+$container-md: 100%
+$container-lg: 940px
+$container-xl: 1140px
+
 @function parse-screen-condition($c)
   $condMap: ('sm': $screen-sm, 'md': $screen-md, 'lg': $screen-lg, 'xl': $screen-xl)
   @return map-get($condMap, $c)
@@ -37,4 +42,21 @@ $line-height-xxl: 36px
 @mixin font($size)
   font-size: #{parse-font-size($size)}
   line-height: #{parse-line-height($size)}
+
+@function parse-container-size($size)
+  $sizeMap: ('sm': $container-sm, 'md': $container-md, 'lg': $container-lg, 'xl': $container-xl)
+  @return map-get($sizeMap, $size)
+
+@mixin container
+  margin: 0 auto
+  width: 100%
+
+  @include screen(sm)
+    max-width: #{parse-container-size(sm)}
+  @include screen(md)
+    max-width: #{parse-container-size(md)}
+  @include screen(lg)
+    max-width: #{parse-container-size(lg)}
+  @include screen(xl)
+    max-width: #{parse-container-size(xl)}
 

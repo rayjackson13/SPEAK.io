@@ -1,19 +1,20 @@
 <script lang="ts">
-  import { writable } from 'svelte/store';
+	import { writable } from 'svelte/store';
 	import { createForm } from 'svelte-forms-lib';
 	import * as yup from 'yup';
-  import { goto } from '$app/navigation';
+	import { goto } from '$app/navigation';
 
 	import Icon from 'svelte-awesome';
-	import { externalLink } from 'svelte-awesome/icons';
+	import ExternalLinkIcon from 'svelte-awesome/icons/external-link';
 
-  import { dbUser, APIException } from 'api/user'
+	import { dbUser, APIException } from 'api/user';
 	import Button from 'components/ui/Button.svelte';
 	import Input from 'components/ui/Input.svelte';
-	import { ValidationErrors } from 'constants/ValidationErrors'
+	import { ValidationErrors } from 'constants/ValidationErrors';
 
-  const apiError = writable<string | undefined>();
+	export let mode: 'sign-in' | 'sign-up' = 'sign-in';
 
+	const apiError = writable<string | undefined>();
 	const { form, errors, handleChange, handleSubmit } = createForm({
 		initialValues: {
 			username: '',
@@ -30,33 +31,42 @@
 				.required(ValidationErrors.PasswordEmpty)
 		}),
 		onSubmit: (values) => {
-			console.log('Submitting...', values);
-
 			const { username, password } = values;
 
-      dbUser.create(username, password, (e) => {
-        const { err } = e as APIException;
-        if (err) {
-          apiError.set(err);
-          return;
-        }
+			if (mode === 'sign-in') {
+				dbUser.auth(username, password, (e) => {
+					const { err } = e as APIException;
+					if (err) {
+						apiError.set(err);
+						return;
+					}
 
-        dbUser.auth(username, password);
-        goto('/')
-      });
+					goto('/');
+				});
+				return;
+			}
+
+			dbUser.create(username, password, (e) => {
+				const { err } = e as APIException;
+				if (err) {
+					apiError.set(err);
+					return;
+				}
+
+				dbUser.auth(username, password);
+				goto('/');
+			});
 		}
 	});
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
-	<h3 class="title">
-		Welcome to <span class="title-accent">SPEAK</span>.io
-	</h3>
+	<h3 class="title">Welcome to <span class="title-accent">SPEAK</span>.io</h3>
 	<p class="info">
 		We are the leading platform in the world of decentralized social networks.
-		<a href="https://www.youtube.com/watch?v=J5x3OMXjgMc" target="_blank" class="info-link">
+		<a href="https://www.youtube.com/watch?v=J5x3OMXjgMc" class="info-link" target="_blank">
 			What does that mean?
-			<Icon data={externalLink} scale={0.8} />
+			<Icon data={ExternalLinkIcon} scale={0.8} />
 		</a>
 	</p>
 
@@ -86,12 +96,17 @@
 		{/if}
 	</div>
 
-	<Button type="submit" text="Sign Up" />
+	<Button type="submit" text={mode === 'sign-in' ? 'Sign In' : 'Sign Up'} />
 
-	<span class="no-account">
-		Already have an account?
-		<a href="/sign-in" class="no-account__link"> Sign In. </a>
-	</span>
+	<div class="no-account">
+		{#if mode === 'sign-in'}
+			Don't have an account yet?
+			<a href="/sign-up" class="no-account__link">Create one.</a>
+		{:else}
+			Already have an account?
+			<a href="/sign-in" class="no-account__link"> Sign In.</a>
+		{/if}
+	</div>
 </form>
 
 <style lang="sass" scoped>
@@ -101,15 +116,15 @@
   form
     max-width: $auth-form-width
     background-color: $white
-    height: 100%
-    filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))
+    width: 100%
     padding: 16px 16px 40px
     margin-bottom: 16px
 
     @include screen(sm)
-      margin-top: 48px
+      margin-top: 64px
       border-radius: 16px
       padding: 32px 32px 40px
+      box-shadow: 0 4px 12px rgb(0 0 0 / 25%)
 
     @include screen(xl)
       height: auto

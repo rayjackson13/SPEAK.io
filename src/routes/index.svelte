@@ -1,9 +1,6 @@
 <script lang="ts" context="module">
-	import { dbUser, AuthType } from 'api/user';
 	import Header from 'components/ui/Header.svelte';
-
-	const user = (dbUser as AuthType).is;
-	console.log('start', user);
+	import CreatePost from 'components/CreatePost.svelte';
 </script>
 
 <svelte:head>
@@ -11,13 +8,14 @@
 </svelte:head>
 
 <div class="page">
-	<Header {user} />
+	<Header title="Home" />
 	<main>
-		<h3>Home Page</h3>
+		<CreatePost />
 	</main>
 </div>
 
 <style lang="sass" scoped>
+	@import 'functions'
 	@import 'vars'
 
 	.page
@@ -25,5 +23,6 @@
 		background-color: $gray-50
 
 	main
-		margin-top: $header-size
+		padding: $header-size 116px 0
+		@include container
 </style>

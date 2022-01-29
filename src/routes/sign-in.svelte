@@ -1,15 +1,23 @@
 <script>
-	import { onMount } from 'svelte';
-	import { prefetchRoutes } from '$app/navigation';
-  
-	import AuthHeader from 'components/auth/AuthHeader.svelte';
+	import { onMount, beforeUpdate } from 'svelte';
+	import { goto, prefetchRoutes } from '$app/navigation';
+
+	import { username } from 'api/user';
+	import AuthForm from 'components/auth/AuthForm.svelte';
 	import Background from 'components/ui/Background.svelte';
-	import SignInForm from 'components/auth/SignInForm.svelte';
+	import Header from 'components/ui/Header.svelte';
 
 	import BackgroundImage from 'assets/login-bg.jpg';
 
+	const checkAuth = () => !!$username && goto('/');
+
 	onMount(() => {
-		prefetchRoutes(['sign-up']);
+		prefetchRoutes(['sign-up', '/']);
+		checkAuth();
+	});
+
+	beforeUpdate(() => {
+		checkAuth();
 	});
 </script>
 
@@ -18,11 +26,11 @@
 </svelte:head>
 
 <div class="page">
-	<AuthHeader />
+	<Header title="SPEAK.io" blur shadow />
 
 	<div class="page-inner">
 		<div class="form-wrap">
-			<SignInForm />
+			<AuthForm />
 		</div>
 
 		<Background image={BackgroundImage} />
@@ -49,16 +57,18 @@
 
     &-inner
       display: flex
-      justify-content: end
       flex: 1
+      justify-content: center
+      @include container
+
+      @include screen(xl)
+        justify-content: end
 
   .form-wrap
     display: flex
     justify-content: center
-    align-items: center
-    width: 100%
-    height: 100%
-
+    align-items: flex-start
+    
     @include screen(xl)
-      width: 60%
+      align-items: center
 </style>
