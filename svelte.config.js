@@ -1,5 +1,5 @@
 import path from 'path';
-import adapter from '@sveltejs/adapter-auto';
+import fbAdapter from 'svelte-adapter-firebase';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -13,7 +13,7 @@ const config = {
 	}),
 
 	kit: {
-		adapter: adapter(),
+		adapter: fbAdapter(),
 
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',

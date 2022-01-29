@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment */
 import http from 'http';
 import GUN from 'gun';
-import 'gun/sea';
-import 'gun/axe';
+import 'gun/sea.js';
+import 'gun/axe.js';
 import type { IGunChainReference } from 'gun/types/chain';
 import { writable } from 'svelte/store';
 
