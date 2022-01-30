@@ -1,40 +1,42 @@
-<script>
-	import { onMount, beforeUpdate } from 'svelte';
-	import { goto, prefetchRoutes } from '$app/navigation';
+<script lang="ts">
+  import { onMount, beforeUpdate } from 'svelte';
+  import { goto, prefetchRoutes } from '$app/navigation';
 
-	import { username } from 'api/user';
-	import AuthForm from 'components/AuthForm.svelte';
-	import Background from 'components/ui/Background.svelte';
-	import Header from 'components/ui/Header.svelte';
+  import { username, dbUser, PublicUser } from 'api/user';
+  import AuthForm from 'components/AuthForm.svelte';
+  import Background from 'components/ui/Background.svelte';
+  import Header from 'components/ui/Header.svelte';
 
-	import BackgroundImage from 'assets/login-bg.jpg';
+  import BackgroundImage from 'assets/login-bg.jpg';
 
-	const checkAuth = () => !!$username && goto('/');
+  const checkAuth = () => {
+    return !!$username && (<PublicUser>dbUser)._.sea && goto('/');
+  };
 
-	onMount(() => {
-	  prefetchRoutes(['sign-up', '/']);
-	  checkAuth();
-	});
+  onMount(() => {
+    prefetchRoutes(['sign-up', '/']);
+    checkAuth();
+  });
 
-	beforeUpdate(() => {
-	  checkAuth();
-	});
+  beforeUpdate(() => {
+    checkAuth();
+  });
 </script>
 
 <svelte:head>
-	<title>Sign In | SPEAK.io</title>
+  <title>Sign In | SPEAK.io</title>
 </svelte:head>
 
 <div class="page">
-	<Header title="SPEAK.io" blur shadow />
+  <Header title="SPEAK.io" blur shadow />
 
-	<div class="page-inner">
-		<div class="form-wrap">
-			<AuthForm />
-		</div>
+  <div class="page-inner">
+    <div class="form-wrap">
+      <AuthForm />
+    </div>
 
-		<Background image={BackgroundImage} />
-	</div>
+    <Background image={BackgroundImage} />
+  </div>
 </div>
 
 <style lang="sass" scoped>

@@ -18,6 +18,7 @@ module.exports = {
 		node: true
 	},
 	rules: {
-		indent: ["warn", 2]
+		indent: ["warn", 2],
+		semi: [2, 'always'],
 	}
 };

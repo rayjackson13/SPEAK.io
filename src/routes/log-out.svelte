@@ -3,7 +3,7 @@
   import { dbUser } from 'api/user';
 
   export function load(): LoadOutput {
-    dbUser.leave(undefined);
+    dbUser.leave();
 
     return {
       redirect: '/sign-in',

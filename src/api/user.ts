@@ -19,6 +19,12 @@ export type Database = IGunChainReference<any, any, "pre_root"> & {
   on: (type: string, callback: () => void) => IGunChainReference<any, any, false>
 }
 
+export type PublicUser = IGunChainReference<Record<string, any>, any, false> & {
+  _: {
+    sea: any;
+  }
+}
+
 // Get current user with option to keep auth between browser sessions.
 export const dbUser = db.user().recall({ sessionStorage: true });
 
@@ -31,5 +37,5 @@ dbUser.get('alias').on(v => username.set(v));
   // @ts-ignore
   username.set(alias);
 
-  console.log(`signed in as ${alias}`);
+  console.info(`signed in as ${alias}`);
 });
