@@ -6,11 +6,15 @@ import preprocess from 'svelte-preprocess';
 const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
-	preprocess: preprocess({
-		sass: {
-			includePaths: ['src/styles'],
-		},
-	}),
+	preprocess: [
+		preprocess({
+			sass: {
+				includePaths: ['src/styles']
+			},
+
+			postcss: true
+		})
+	],
 
 	kit: {
 		adapter: adapter({
@@ -34,7 +38,7 @@ const config = {
 				}
 			}
 		}
-	},
+	}
 };
 
 export default config;

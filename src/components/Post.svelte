@@ -29,23 +29,28 @@
     display: flex
     border-radius: 16px
     box-shadow: 0 4px 12px rgb(0 0 0 / .12)
-    padding: 2px 2px 4px
+    padding: 5px
+    padding-left: 18px
     margin-bottom: 8px
-
-    @include screen(sm)
-      padding: 5px 5px
 
     @include screen(lg)
       padding: 20px
 
     &-aside img
-      width: 60px
-      height: 60px
+      width: 36px
+      height: 36px
       border-radius: 50%
     
+      @include screen(lg)
+        width: 60px
+        height: 60px
+
     &-main
       flex: 1
-      padding-left: 18px
+      padding-left: 12px
+
+      @include screen(lg)
+        padding-left: 18px
 
     &-head
       display: flex
@@ -64,6 +69,9 @@
       color: $gray-500
 
     &-body p
-      @include font(xl)
+      @include font(lg)
       margin-bottom: 4px
+
+      @include screen(lg)
+        @include font(xl)
 </style>

@@ -63,7 +63,7 @@ import { goto } from '$app/navigation';
     background-image: linear-gradient(111.23deg, #7D31DE 0%, #E97911 100%)
     border-radius: 16px
     box-shadow: 0 4px 12px rgb(0 0 0 / .25)
-    padding: 2px 2px 4px
+    padding: 2px 4px 4px
 
     @include screen(sm)
       padding: 5px 5px

@@ -3,7 +3,7 @@
 	import { goto, prefetchRoutes } from '$app/navigation';
 
 	import { username } from 'api/user';
-	import AuthForm from 'components/auth/AuthForm.svelte';
+	import AuthForm from 'components/AuthForm.svelte';
 	import Background from 'components/ui/Background.svelte';
 	import Header from 'components/ui/Header.svelte';
 
@@ -62,7 +62,7 @@
       @include container
 
       @include screen(xl)
-        justify-content: end
+        justify-content: flex-end
 
   .form-wrap
     display: flex

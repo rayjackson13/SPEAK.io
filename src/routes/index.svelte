@@ -2,7 +2,6 @@
 	import { onMount, beforeUpdate } from 'svelte';
 
 	import { username } from 'api/user';
-	import { create } from 'api/posts';
 	import Header from 'components/ui/Header.svelte';
 	import CreatePost from 'components/CreatePost.svelte';
 	import PostList from 'components/PostList.svelte';
@@ -38,7 +37,7 @@ import { postStore } from 'stores/posts';
 </svelte:head>
 
 <div class="page">
-	<Header title="Home" />
+	<Header title="Home" shadow blur />
 	<main>
 		<CreatePost {onCreatePost} />
 		<PostList {posts} />

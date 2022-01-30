@@ -188,6 +188,8 @@
         height: 24px
 
       & img
+        width: 100%
+        height: 100%
         border-radius: 50%
         box-shadow: 1px 2px 8px rgb(0 0 0 / .25)
 
