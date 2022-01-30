@@ -12,3 +12,4 @@ yarn-error.*
 .svelte/
 .vercel_build_output/
 firebase-debug*
+radata/

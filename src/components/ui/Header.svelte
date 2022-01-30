@@ -157,11 +157,13 @@
       opacity: 1
       z-index: 10
       cursor: default
+      pointer-events: all
 
       &_hidden
         transform: translateY(calc(-25%))
         opacity: 0
         z-index: -1
+        pointer-events: none
 
       & a
         cursor: pointer
