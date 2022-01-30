@@ -1,112 +1,112 @@
 <script lang="ts">
-	import { writable } from 'svelte/store';
-	import { createForm } from 'svelte-forms-lib';
-	import * as yup from 'yup';
-	import { goto } from '$app/navigation';
+  import { writable } from 'svelte/store';
+  import { createForm } from 'svelte-forms-lib';
+  import * as yup from 'yup';
+  import { goto } from '$app/navigation';
 
-	import Icon from 'svelte-awesome';
-	import ExternalLinkIcon from 'svelte-awesome/icons/external-link';
+  import Icon from 'svelte-awesome';
+  import ExternalLinkIcon from 'svelte-awesome/icons/external-link';
 
-	import { dbUser, APIException } from 'api/user';
-	import Button from 'components/ui/Button.svelte';
-	import Input from 'components/ui/Input.svelte';
-	import { ValidationErrors } from 'constants/ValidationErrors';
+  import { dbUser, APIException } from 'api/user';
+  import Button from 'components/ui/Button.svelte';
+  import Input from 'components/ui/Input.svelte';
+  import { ValidationErrors } from 'constants/ValidationErrors';
 
-	export let mode: 'sign-in' | 'sign-up' = 'sign-in';
+  export let mode: 'sign-in' | 'sign-up' = 'sign-in';
 
-	const apiError = writable<string | undefined>();
-	const { form, errors, handleChange, handleSubmit } = createForm({
-		initialValues: {
-			username: '',
-			password: ''
-		},
-		validationSchema: yup.object().shape({
-			username: yup
-				.string()
-				.min(6, ValidationErrors.UsernameShort)
-				.required(ValidationErrors.UsernameEmpty),
-			password: yup
-				.string()
-				.min(6, ValidationErrors.PasswordShort)
-				.required(ValidationErrors.PasswordEmpty)
-		}),
-		onSubmit: (values) => {
-			const { username, password } = values;
+  const apiError = writable<string | undefined>();
+  const { form, errors, handleChange, handleSubmit } = createForm({
+    initialValues: {
+      username: '',
+      password: ''
+    },
+    validationSchema: yup.object().shape({
+      username: yup
+        .string()
+        .min(6, ValidationErrors.UsernameShort)
+        .required(ValidationErrors.UsernameEmpty),
+      password: yup
+        .string()
+        .min(6, ValidationErrors.PasswordShort)
+        .required(ValidationErrors.PasswordEmpty)
+    }),
+    onSubmit: (values) => {
+      const { username, password } = values;
 
-			if (mode === 'sign-in') {
-				dbUser.auth(username, password, (e) => {
-					const { err } = e as APIException;
-					if (err) {
-						apiError.set(err);
-						return;
-					}
+      if (mode === 'sign-in') {
+        dbUser.auth(username, password, (e) => {
+          const { err } = e as APIException;
+          if (err) {
+            apiError.set(err);
+            return;
+          }
 
-					goto('/');
-				});
-				return;
-			}
+          goto('/');
+        });
+        return;
+      }
 
-			dbUser.create(username, password, (e) => {
-				const { err } = e as APIException;
-				if (err) {
-					apiError.set(err);
-					return;
-				}
+      dbUser.create(username, password, (e) => {
+        const { err } = e as APIException;
+        if (err) {
+          apiError.set(err);
+          return;
+        }
 
-				dbUser.auth(username, password);
-				goto('/');
-			});
-		}
-	});
+        dbUser.auth(username, password);
+        goto('/');
+      });
+    }
+  });
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
-	<h3 class="title">Welcome to <span class="title-accent">SPEAK</span>.io</h3>
-	<p class="info">
-		We are the leading platform in the world of decentralized social networks.
-		<a href="https://www.youtube.com/watch?v=J5x3OMXjgMc" class="info-link" target="_blank">
-			What does that mean?
-			<Icon data={ExternalLinkIcon} scale={0.8} />
-		</a>
-	</p>
+  <h3 class="title">Welcome to <span class="title-accent">SPEAK</span>.io</h3>
+  <p class="info">
+    We are the leading platform in the world of decentralized social networks.
+    <a href="https://www.youtube.com/watch?v=J5x3OMXjgMc" class="info-link" target="_blank">
+      What does that mean?
+      <Icon data={ExternalLinkIcon} scale={0.8} />
+    </a>
+  </p>
 
-	<Input
-		type="text"
-		name="username"
-		label="Username"
-		classes="input"
-		{handleChange}
-		bind:value={$form.username}
-		error={$errors.username}
-	/>
+  <Input
+    type="text"
+    name="username"
+    label="Username"
+    classes="input"
+    {handleChange}
+    bind:value={$form.username}
+    error={$errors.username}
+  />
 
-	<Input
-		type="password"
-		name="password"
-		label="Password"
-		classes="input"
-		{handleChange}
-		bind:value={$form.password}
-		error={$errors.password}
-	/>
+  <Input
+    type="password"
+    name="password"
+    label="Password"
+    classes="input"
+    {handleChange}
+    bind:value={$form.password}
+    error={$errors.password}
+  />
 
-	<div class="errorHolder">
-		{#if $apiError}
-			<small>{$apiError}</small>
-		{/if}
-	</div>
+  <div class="errorHolder">
+    {#if $apiError}
+      <small>{$apiError}</small>
+    {/if}
+  </div>
 
-	<Button type="submit" text={mode === 'sign-in' ? 'Sign In' : 'Sign Up'} />
+  <Button type="submit" text={mode === 'sign-in' ? 'Sign In' : 'Sign Up'} />
 
-	<div class="no-account">
-		{#if mode === 'sign-in'}
-			Don't have an account yet?
-			<a href="/sign-up" class="no-account__link">Create one.</a>
-		{:else}
-			Already have an account?
-			<a href="/sign-in" class="no-account__link"> Sign In.</a>
-		{/if}
-	</div>
+  <div class="no-account">
+    {#if mode === 'sign-in'}
+      Don't have an account yet?
+      <a href="/sign-up" class="no-account__link">Create one.</a>
+    {:else}
+      Already have an account?
+      <a href="/sign-in" class="no-account__link"> Sign In.</a>
+    {/if}
+  </div>
 </form>
 
 <style lang="sass" scoped>

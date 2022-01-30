@@ -1,34 +1,34 @@
 <script lang="ts">
-	import clsx from 'clsx';
+  import clsx from 'clsx';
 
-	export let type: 'text' | 'password';
-	export let label: string;
-	export let classes: string | undefined;
-	export let value: string;
-	export let name: string;
-	export let handleChange: ((event: any) => any) | undefined;
-	export let error: string | undefined;
+  export let type: 'text' | 'password';
+  export let label: string;
+  export let classes: string | undefined;
+  export let value: string;
+  export let name: string;
+  export let handleChange: ((event: any) => any) | undefined;
+  export let error: string | undefined;
 
-	const getClass = (error: string | undefined) => {
-		return clsx(!!error && 'input-error');
-	};
+  const getClass = (error: string | undefined) => {
+    return clsx(!!error && 'input-error');
+  };
 </script>
 
 <div class={classes}>
-	<label>
-		{label}:
-		<input
-			{name}
-			class={getClass(error)}
-			placeholder={label}
-			{type}
-			{value}
-			on:change={handleChange}
-		/>
-		{#if error}
-			<small>{error}</small>
-		{/if}
-	</label>
+  <label>
+    {label}:
+    <input
+      {name}
+      class={getClass(error)}
+      placeholder={label}
+      {type}
+      {value}
+      on:change={handleChange}
+    />
+    {#if error}
+      <small>{error}</small>
+    {/if}
+  </label>
 </div>
 
 <style lang="sass" scoped>

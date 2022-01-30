@@ -1,77 +1,77 @@
 <script lang="ts">
-	import clsx from 'clsx';
+  import clsx from 'clsx';
 
-	import { username } from 'api/user';
-	import MenuIcon from 'svelte-icons/go/GoKebabVertical.svelte';
-	import LogoIcon from 'assets/logo.svg';
+  import { username } from 'api/user';
+  import MenuIcon from 'svelte-icons/go/GoKebabVertical.svelte';
+  import LogoIcon from 'assets/logo.svg';
 
-	let isMenuOpened = false;
+  let isMenuOpened = false;
 
-	const onMenuClick = (e: Event) => {
-		const target = e.target as HTMLElement;
-		const parent = target.parentElement;
-		if (target.classList.contains('menu-inner') || parent?.classList.contains('menu-inner')) return;
-		isMenuOpened = !isMenuOpened;
-	};
+  const onMenuClick = (e: Event) => {
+    const target = e.target as HTMLElement;
+    const parent = target.parentElement;
+    if (target.classList.contains('menu-inner') || parent?.classList.contains('menu-inner')) return;
+    isMenuOpened = !isMenuOpened;
+  };
 
-	const closeMenu = (e: FocusEvent) => {
-		const target = e.relatedTarget as HTMLElement;
+  const closeMenu = (e: FocusEvent) => {
+    const target = e.relatedTarget as HTMLElement;
     if (target.tagName.toLowerCase() === 'a') return;
 
     isMenuOpened = false;
-  }
+  };
 
-	export let title: string;
-	export let fixed: boolean = false;
-	export let blur: boolean = false;
-	export let shadow: boolean = false;
+  export let title: string;
+  export let fixed = false;
+  export let blur = false;
+  export let shadow = false;
 </script>
 
 <header
-	class={clsx({
-		header: true,
-		'header-fixed': fixed,
-		'header-blur': blur,
-		'header-shadow': shadow
-	})}
+  class={clsx({
+    header: true,
+    'header-fixed': fixed,
+    'header-blur': blur,
+    'header-shadow': shadow
+  })}
 >
-	<div class="container">
-		<div class="logo">
-			<a href="/">
-				<img src={LogoIcon} alt="SPEAK.io Logo" />
-			</a>
-		</div>
-		<div class="center">
-			<h1>{title}</h1>
-		</div>
-		<div class="menu">
-			<button type="button" class="menu-button" on:click={onMenuClick} on:focusout={closeMenu}>
-				{#if !$username}
-					<MenuIcon />
-				{:else}
-					<img src="https://avatars.dicebear.com/api/initials/{$username}.svg" alt={$username} />
-				{/if}
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <img src={LogoIcon} alt="SPEAK.io Logo" />
+      </a>
+    </div>
+    <div class="center">
+      <h1>{title}</h1>
+    </div>
+    <div class="menu">
+      <button type="button" class="menu-button" on:click={onMenuClick} on:focusout={closeMenu}>
+        {#if !$username}
+          <MenuIcon />
+        {:else}
+          <img src="https://avatars.dicebear.com/api/initials/{$username}.svg" alt={$username} />
+        {/if}
 
-				<div
-					class={clsx({
-						'menu-inner': true,
-						'menu-inner_hidden': !isMenuOpened
-					})}
-				>
-					{#if !$username}
-						<a href="/sign-up">Sign Up</a>
-						<a href="/sign-in">Log In</a>
-					{:else}
-						<a href="/log-out">Log Out</a>
-					{/if}
-				</div>
-			</button>
-		</div>
-	</div>
+        <div
+          class={clsx({
+            'menu-inner': true,
+            'menu-inner_hidden': !isMenuOpened
+          })}
+        >
+          {#if !$username}
+            <a href="/sign-up">Sign Up</a>
+            <a href="/sign-in">Log In</a>
+          {:else}
+            <a href="/log-out">Log Out</a>
+          {/if}
+        </div>
+      </button>
+    </div>
+  </div>
 </header>
 
 {#if !fixed}
-	<div class="space-taker" />
+  <div class="space-taker" />
 {/if}
 
 <style lang="sass" scoped>

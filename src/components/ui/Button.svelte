@@ -1,6 +1,6 @@
 <script lang="ts">
-	export let type: 'button' | 'submit';
-	export let text: string | undefined;
+  export let type: 'button' | 'submit';
+  export let text: string | undefined;
 </script>
 
 <button {type}>{text}</button>

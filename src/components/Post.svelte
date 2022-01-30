@@ -1,24 +1,28 @@
 <script lang="ts">
-	export let author: string = '';
-	export let text: string = '';
-	export let timestamp: number = Date.now();
+  export let author = '';
+  export let text = '';
+  export let timestamp: number = Date.now();
 
-	const date = new Date(timestamp).toDateString();
+  const date = new Date(timestamp).toDateString();
+
+  const purifyText = (text: string) => text.replace(/[\\]+\\n/gi, '\n');
 </script>
 
 <article class="card">
-	<div class="card-aside">
-		<img src={`https://avatars.dicebear.com/api/initials/${author}.svg`} alt={author} />
-	</div>
-	<div class="card-main">
-		<div class="card-head">
-			<span>@{author}</span>
+  <div class="card-aside">
+    <img src={`https://avatars.dicebear.com/api/initials/${author}.svg`} alt={author} />
+  </div>
+  <div class="card-main">
+    <div class="card-head">
+      <span>@{author}</span>
       <small class="card-date">{date}</small>
-		</div>
-		<div class="card-body">
-			<p>{text}</p>
-		</div>
-	</div>
+    </div>
+    <div class="card-body">
+      <p>
+        {purifyText(text)}
+      </p>
+    </div>
+  </div>
 </article>
 
 <style lang="sass" scoped>
@@ -48,9 +52,11 @@
     &-main
       flex: 1
       padding-left: 12px
+      max-width: calc(100% - 48px)
 
       @include screen(lg)
         padding-left: 18px
+        max-width: calc(100% - 78px)
 
     &-head
       display: flex
@@ -71,7 +77,13 @@
     &-body p
       @include font(lg)
       margin-bottom: 4px
+      width: 100%
+      height: 100%
+      white-space: pre-wrap
 
       @include screen(lg)
         @include font(xl)
+
+      & :global(*)
+        max-width: 100%
 </style>

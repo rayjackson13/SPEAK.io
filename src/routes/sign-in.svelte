@@ -12,12 +12,12 @@
 	const checkAuth = () => !!$username && goto('/');
 
 	onMount(() => {
-		prefetchRoutes(['sign-up', '/']);
-		checkAuth();
+	  prefetchRoutes(['sign-up', '/']);
+	  checkAuth();
 	});
 
 	beforeUpdate(() => {
-		checkAuth();
+	  checkAuth();
 	});
 </script>
 

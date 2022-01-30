@@ -8,27 +8,27 @@
 import { postStore } from 'stores/posts';
 
 	const getPosts = () => {
-		return Object.entries($postStore)
-			.sort((a, b) => b[1].date - a[1].date)
-			.map((val) => val[1]);
+	  return Object.entries($postStore)
+	    .sort((a, b) => b[1].date - a[1].date)
+	    .map((val) => val[1]);
 	};
 
 	$: posts = getPosts();
 
 	onMount(() => {
-		posts = getPosts();
+	  posts = getPosts();
 	});
 
 	beforeUpdate(() => {
-		posts = getPosts();
+	  posts = getPosts();
 	});
 
 	const onCreatePost = async (text: string) => {
-		postStore.update(Date.now().toString(), {
-			author: $username,
-			text,
-			date: Date.now()
-		});
+	  postStore.update(Date.now().toString(), {
+	    author: $username,
+	    text,
+	    date: Date.now()
+	  });
 	};
 </script>
 

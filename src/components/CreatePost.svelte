@@ -1,57 +1,53 @@
 <script lang="ts">
-import { goto } from '$app/navigation';
-
-	import { createPost } from 'api/posts';
-	import { username } from 'api/user';
-
-	import { onMount } from 'svelte';
-	import { createForm } from 'svelte-forms-lib';
-
-	import PostIcon from 'svelte-icons/io/IoIosSend.svelte';
+  import { goto } from '$app/navigation';
+  import { onMount } from 'svelte';
+  import { createForm } from 'svelte-forms-lib';
+  import PostIcon from 'svelte-icons/io/IoIosSend.svelte';
+  import { username } from 'api/user';
 
   export let onCreatePost: (text: string) => void;
-	let textarea: HTMLTextAreaElement;
+  let textarea: HTMLTextAreaElement;
 
-	const { form, handleSubmit, handleChange, handleReset } = createForm({
-		initialValues: {
-			text: ''
-		},
-		onSubmit: async ({ text }) => {
+  const { form, handleSubmit, handleChange, handleReset } = createForm({
+    initialValues: {
+      text: ''
+    },
+    onSubmit: async ({ text }) => {
       if (!$username) {
         goto('/sign-in');
         return;
       }
 
-			if (!text.trim()) return;
+      if (!text.trim()) return;
 
-			onCreatePost(text);
-			handleReset();
-		}
-	});
+      onCreatePost(text);
+      handleReset();
+    }
+  });
 
-	onMount(async () => {
-		textarea.addEventListener('keydown', (e: KeyboardEvent) => {
-			if (e.key.toLowerCase() === 'enter' && e.metaKey) handleSubmit(e);
-		});
-	});
+  onMount(async () => {
+    textarea.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === 'enter' && e.metaKey) handleSubmit(e);
+    });
+  });
 </script>
 
 <form on:submit={handleSubmit}>
-	<textarea
-		name="text"
-		bind:this={textarea}
-		bind:value={$form.text}
-		placeholder="Got something on your mind? Speak 😄"
-		on:change={handleChange}
-	/>
-	<div class="options">
-		<p class="helper-block">
-			<span><strong>Enter</strong> inserts a new line.</span>
-			<br />
-			<span>Press <strong>Ctrl+Enter (⌘+Enter)</strong> to submit.</span>
-		</p>
-		<button class="submit" type="submit">Post <PostIcon /></button>
-	</div>
+  <textarea
+    name="text"
+    bind:this={textarea}
+    bind:value={$form.text}
+    placeholder="Got something on your mind? Speak 😄"
+    on:change={handleChange}
+  />
+  <div class="options">
+    <p class="helper-block">
+      <span><strong>Enter</strong> inserts a new line.</span>
+      <br />
+      <span>Press <strong>Ctrl+Enter (⌘+Enter)</strong> to submit.</span>
+    </p>
+    <button class="submit" type="submit">Post <PostIcon /></button>
+  </div>
 </form>
 
 <style lang="sass" scoped>

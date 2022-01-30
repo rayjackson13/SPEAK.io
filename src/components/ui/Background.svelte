@@ -1,13 +1,13 @@
 <script lang="ts">
-	import clsx from 'clsx';
+  import clsx from 'clsx';
 
-	export let image: string;
-	export let classes: string | undefined = undefined;
+  export let image: string;
+  export let classes: string | undefined = undefined;
 </script>
 
 <div class={clsx('wrap', classes)}>
-	<div class="background" style="--image: url({image});" />
-	<div class="background-side" />
+  <div class="background" style="--image: url({image});" />
+  <div class="background-side" />
 </div>
 
 <style lang="sass" scoped>

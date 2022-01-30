@@ -1,23 +1,23 @@
 <!-- @deprecated: Out of use. -->
 <script lang="ts">
-	import UploadIcon from 'svelte-icons/io/IoIosCloudUpload.svelte';
+  import UploadIcon from 'svelte-icons/io/IoIosCloudUpload.svelte';
 
-	export let label: string;
-	export let name: string;
-	export let classes: string | undefined;
+  export let label: string;
+  export let name: string;
+  export let classes: string | undefined;
 </script>
 
 <div class={classes}>
-	<span class="label">{label}:</span>
+  <span class="label">{label}:</span>
 
-	<span class="wrap">
-		<input {name} type="file" />
-		<i class="icon">
-			<UploadIcon />
-		</i>
+  <span class="wrap">
+    <input {name} type="file" />
+    <i class="icon">
+      <UploadIcon />
+    </i>
 
-		<span class="text">Upload an image</span>
-	</span>
+    <span class="text">Upload an image</span>
+  </span>
 </div>
 
 <style lang="sass" scoped>
