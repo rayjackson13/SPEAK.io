@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IGunChainReference } from 'gun/types/chain';
 import { db } from './db';
 
 export type PostType = {
@@ -7,9 +9,12 @@ export type PostType = {
   id?: string;
 }
 
+export type PostStore = {
+  [x: string]: PostType;
+}
+
 export const createPost = async (post: PostType): Promise<void> => {
   return new Promise((resolve, reject) => {
-    console.log('i go here', post);
     db.get('posts').set(post, ({ err }) => {
       if (err) {
         console.error(err);
@@ -22,17 +27,18 @@ export const createPost = async (post: PostType): Promise<void> => {
   });
 };
 
-export const loadPosts = async (): Promise<PostType[]> => {
-  return new Promise((resolve) => {
-    const postArray: PostType[] = [];
-    db.get('posts').map().on((post, id) => {
-      postArray.push({ id, ...post });
-    });
+export const create = (post: PostType): IGunChainReference<any, number, false> => {
+  return db.get('posts').get(post.date).put(post);
+}
 
-    const sorted = postArray.sort((a, b) => {
-      return b.date - a.date;
-    });
+export let store: PostStore = {};
+db.get('posts').map().on((post, key) => {
+  if (!post){
+    delete store[key];
+    /* eslint-disable-next-line */
+    store = store
+    return;
+  }
 
-    resolve(sorted);
-  });
-};
+  store = { ...store, [key]: { ...post } };
+});

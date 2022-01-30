@@ -29,7 +29,8 @@ const config = {
 					api: path.resolve('./src/api'),
 					assets: path.resolve('./src/assets'),
 					components: path.resolve('./src/components'),
-					constants: path.resolve('./src/constants')
+					constants: path.resolve('./src/constants'),
+					stores: path.resolve('./src/stores')
 				}
 			}
 		}

@@ -26,7 +26,8 @@
 			"api/*": ["src/api/*"],
 			"assets/*": ["src/assets/*"],
 			"components/*": ["src/components/*"],
-			"constants/*": ["src/constants/*"]
+			"constants/*": ["src/constants/*"],
+			"stores/*": ["src/stores/*"]
 		},
 		"strict": true
 	},

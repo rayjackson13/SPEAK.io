@@ -1,32 +1,35 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { writable } from 'svelte/store';
+	import { onMount, beforeUpdate } from 'svelte';
 
 	import { username } from 'api/user';
-	import { createPost, loadPosts, PostType } from 'api/posts';
+	import { create } from 'api/posts';
 	import Header from 'components/ui/Header.svelte';
 	import CreatePost from 'components/CreatePost.svelte';
 	import PostList from 'components/PostList.svelte';
+import { postStore } from 'stores/posts';
 
-	const posts = writable<PostType[]>([]);
+	const getPosts = () => {
+		return Object.entries($postStore)
+			.sort((a, b) => b[1].date - a[1].date)
+			.map((val) => val[1]);
+	};
 
-	onMount(async () => {
-		posts.set(await loadPosts());
-		console.log(await loadPosts());
+	$: posts = getPosts();
+
+	onMount(() => {
+		posts = getPosts();
+	});
+
+	beforeUpdate(() => {
+		posts = getPosts();
 	});
 
 	const onCreatePost = async (text: string) => {
-		await createPost({
+		postStore.update(Date.now().toString(), {
 			author: $username,
 			text,
 			date: Date.now()
 		});
-
-		setTimeout(async () => {
-			const _posts = await loadPosts();
-			console.log('loaded', _posts);
-			posts.set(_posts);
-		}, 1000);
 	};
 </script>
 
