@@ -1,15 +1,17 @@
 <script lang="ts" context="module">
-	import { dbUser } from 'api/user';
-	export function load() {
-	  dbUser.leave(undefined);
+  import type { LoadOutput } from '@sveltejs/kit';
+  import { dbUser } from 'api/user';
 
-	  return {
-	    redirect: '/sign-in',
-	    status: 302
-	  };
-	}
+  export function load(): LoadOutput {
+    dbUser.leave(undefined);
+
+    return {
+      redirect: '/sign-in',
+      status: 302
+    };
+  }
 </script>
 
 <svelte:head>
-	<title>Log out | SPEAK.io</title>
+  <title>Log out | SPEAK.io</title>
 </svelte:head>
