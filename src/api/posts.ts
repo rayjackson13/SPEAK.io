@@ -1,6 +1,4 @@
-import GUN from 'gun';
-
-const db = GUN();
+import { db } from './db';
 
 export type PostType = {
   text: string;

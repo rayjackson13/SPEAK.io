@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment */
-import GUN from 'gun';
-import 'gun/sea.js';
-import 'gun/axe.js';
 import type { IGunChainReference } from 'gun/types/chain';
 import { writable } from 'svelte/store';
+import { db } from './db';
 
 export type APIException = {
   err: string;
@@ -20,9 +18,6 @@ export type AuthType = IGunChainReference<Record<string, any>, any, false> & {
 export type Database = IGunChainReference<any, any, "pre_root"> & {
   on: (type: string, callback: () => void) => IGunChainReference<any, any, false>
 }
-
-// Initialize the database
-export const db = GUN([import.meta.env.VITE_RELAY_HOST]);
 
 // Get current user with option to keep auth between browser sessions.
 export const dbUser = db.user().recall({ sessionStorage: true });
