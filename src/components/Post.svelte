@@ -9,7 +9,7 @@
   const getReadableDate = (timestamp: number): string => {
     const date = new Date(timestamp);
     return formatDistance(date, new Date(), { addSuffix: true });
-  }
+  };
 </script>
 
 <article class="card">

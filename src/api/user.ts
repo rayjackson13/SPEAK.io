@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment */
 import type { IGunChainReference } from 'gun/types/chain';
 import { writable } from 'svelte/store';
+
 import { db } from './db';
 
 export type APIException = {
@@ -32,7 +33,7 @@ export const username = writable('');
 
 dbUser.get('alias').on(v => username.set(v));
 
-(db as Database).on('auth', async() => {
+(db as Database).on('auth', async () => {
   const alias = await dbUser.get('alias');
   // @ts-ignore
   username.set(alias);
