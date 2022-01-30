@@ -1,13 +1,10 @@
 <script lang="ts">
   import { formatDistance } from 'date-fns';
+  import { getPostHtml } from 'utils/getPostHtml';
 
   export let author = '';
   export let text = '';
   export let timestamp: number = Date.now();
-  const purifyText = (text: string) => {
-    if (!text) return '';
-    return text.replace(/[\\]+n/gi, '\n');
-  };
 
   const getReadableDate = (timestamp: number): string => {
     const date = new Date(timestamp);
@@ -26,7 +23,7 @@
     </div>
     <div class="card-body">
       <p>
-        {purifyText(text)}
+        {@html getPostHtml(text)}
       </p>
     </div>
   </div>
@@ -94,4 +91,10 @@
 
       & :global(*)
         max-width: 100%
+
+      & :global(a)
+        color: $secondary-600
+
+      & :global(a:visited)
+        color: $secondary-800
 </style>
