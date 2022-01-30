@@ -3,7 +3,7 @@ import type { IGunChainReference } from "gun/types/chain";
 import { writable } from "svelte/store";
 
 import { db, suffix } from "api/db";
-import { SEA } from "gun";
+import gun from "gun";
 
 const dbPosts = db.get(`posts${suffix}`);
 const SECRET = import.meta.env.VITE_POST_SECRET;
@@ -20,12 +20,12 @@ type PostStore = {
 }
 
 const encryptPost = async (post: PostType) => {
-  const text = await SEA.encrypt(post.text, <string>SECRET);
+  const text = await gun.SEA.encrypt(post.text, <string>SECRET);
   return { ...post, text };
 };
 
 const decryptPost = async (post: PostType) => {
-  const text = await SEA.decrypt(post.text, <string>SECRET);
+  const text = await gun.SEA.decrypt(post.text, <string>SECRET);
   return { ...post, text };
 };
 
