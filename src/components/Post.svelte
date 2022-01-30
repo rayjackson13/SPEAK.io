@@ -1,11 +1,15 @@
 <script lang="ts">
+  import { formatDistance } from 'date-fns';
+
   export let author = '';
   export let text = '';
   export let timestamp: number = Date.now();
+  const purifyText = (text: string) => text.replace(/[\\]+n/gi, "\n");
 
-  const date = new Date(timestamp).toDateString();
-
-  const purifyText = (text: string) => text.replace(/[\\]+\\n/gi, '\n');
+  const getReadableDate = (timestamp: number): string => {
+    const date = new Date(timestamp);
+    return formatDistance(date, new Date(), { addSuffix: true });
+  }
 </script>
 
 <article class="card">
@@ -15,7 +19,7 @@
   <div class="card-main">
     <div class="card-head">
       <span>@{author}</span>
-      <small class="card-date">{date}</small>
+      <small class="card-date">{getReadableDate(timestamp)}</small>
     </div>
     <div class="card-body">
       <p>
