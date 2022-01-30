@@ -3,8 +3,10 @@ import type { IGunChainReference } from "gun/types/chain";
 import { writable } from "svelte/store";
 
 import { db, suffix } from "api/db";
+import { SEA } from "gun";
 
 const dbPosts = db.get(`posts${suffix}`);
+const SECRET = import.meta.env.VITE_POST_SECRET;
 
 type PostType = {
   text: string;
@@ -17,9 +19,19 @@ type PostStore = {
   [x: string]: PostType;
 }
 
+const encryptPost = async (post: PostType) => {
+  const text = await SEA.encrypt(post.text, <string>SECRET);
+  return { ...post, text };
+};
+
+const decryptPost = async (post: PostType) => {
+  const text = await SEA.decrypt(post.text, <string>SECRET);
+  return { ...post, text };
+};
+
 const createMapStore = (ref: IGunChainReference<any, any, false>) => {
   const { update, subscribe } = writable(<PostStore>{});
-  ref.on((data, key) => {
+  ref.on(async (data, key) => {
     if (!data) {
       update(store => {
         // @ts-ignore
@@ -29,13 +41,15 @@ const createMapStore = (ref: IGunChainReference<any, any, false>) => {
       return;
     }
 
-    update(store => ({...store, [key]: data}));
+    const post = await decryptPost(data);
+    update(store => ({...store, [key]: post}));
   });
 
   return {
     subscribe,
-    update: (key: string, value: PostType) => {
-      return dbPosts.get(key).put(value);
+    update: async (key: string, post: PostType) => {
+      const encrypted = await encryptPost(post);
+      return dbPosts.get(key).put(encrypted);
     }
   };
 };

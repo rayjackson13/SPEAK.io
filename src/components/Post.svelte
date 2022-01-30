@@ -4,7 +4,10 @@
   export let author = '';
   export let text = '';
   export let timestamp: number = Date.now();
-  const purifyText = (text: string) => text.replace(/[\\]+n/gi, "\n");
+  const purifyText = (text: string) => {
+    if (!text) return '';
+    return text.replace(/[\\]+n/gi, '\n');
+  };
 
   const getReadableDate = (timestamp: number): string => {
     const date = new Date(timestamp);
@@ -84,6 +87,7 @@
       width: 100%
       height: 100%
       white-space: pre-wrap
+      word-break: break-word
 
       @include screen(lg)
         @include font(xl)
