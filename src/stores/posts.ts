@@ -8,7 +8,7 @@ import gun from "gun";
 const dbPosts = db.get(`posts${suffix}`);
 const SECRET = import.meta.env.VITE_POST_SECRET;
 
-type PostType = {
+export type PostType = {
   text: string;
   author: string;
   date: number;
