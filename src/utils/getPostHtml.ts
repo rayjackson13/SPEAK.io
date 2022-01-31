@@ -1,5 +1,4 @@
-import { browser } from "$app/env";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 
 const LINK_REGEX = /(((https?:\/\/)|(www\.))[^\s]+)/g;
 
@@ -16,7 +15,7 @@ const convertStringToHtml = (content: string) => {
 };
 
 export const getPostHtml = (text: string): string => {
-  if (!text || !browser) return '';
+  if (!text) return '';
 
   const content = purifyText(text);
   return convertStringToHtml(content);
