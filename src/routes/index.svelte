@@ -5,7 +5,7 @@
   import Header from 'components/ui/Header.svelte';
   import CreatePost from 'components/CreatePost.svelte';
   import PostList from 'components/PostList.svelte';
-  import { postStore } from 'stores/posts';
+  import { postStore, PostType } from 'stores/posts';
 
   const getPosts = () => {
     return Object.entries($postStore)
@@ -13,7 +13,7 @@
       .map((val) => val[1]);
   };
 
-  $: posts = getPosts();
+  let posts: PostType[] = [];
 
   onMount(() => {
     posts = getPosts();
