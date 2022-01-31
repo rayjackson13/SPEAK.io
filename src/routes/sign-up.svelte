@@ -7,7 +7,7 @@
   import Background from 'components/ui/Background.svelte';
   import Header from 'components/ui/Header.svelte';
 
-  import BackgroundImage from 'assets/signup-bg.jpeg';
+  import BackgroundImage from 'assets/signup-bg.jpg';
 
   const checkAuth = () => {
     return !!$username && (<PublicUser>dbUser)._.sea && goto('/');
